@@ -29,6 +29,9 @@ jobs:
             ~/.gradle/wrapper/
           key: gradle-${{ hashFiles('**/*.gradle*') }}
 
+      - name: Dar permissão ao Gradle Wrapper
+        run: chmod +x ./gradlew
+
       - name: Build e testes
         run: ./gradlew clean build -x test --no-daemon
 
@@ -41,4 +44,4 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
           -H "Content-Type: application/json" \
           -d '{"serviceId": "${{ secrets.RENDER_SERVICE_ID }}"}' \
-          https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys || exit 1
+          https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys
