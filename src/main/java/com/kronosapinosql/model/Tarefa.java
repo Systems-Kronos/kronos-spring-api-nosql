@@ -18,11 +18,11 @@ public class Tarefa {
 
     @Field(name = "nCdUsuarioResponsavel")
     @DBRef
-    private Usuario usuario;
+    private string nCdUsuarioResponsavel;
 
     @DBRef
     @Field(name = "nCdHabilidade")
-    private Habilidade habilidade;
+    private string nCdHabilidade;
 
     @Field(name = "iGravidade")
     private Integer gravidade ;
