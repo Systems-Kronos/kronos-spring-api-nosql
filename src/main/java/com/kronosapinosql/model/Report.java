@@ -36,5 +36,27 @@ public class Report {
 
     public Report(){}
 
+    public Tarefa getTarefa() {
+        return Tarefa;
+    }
 
+    public void setTarefa(Tarefa tarefa) {
+        Tarefa = tarefa;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getProblema() {
+        return problema;
+    }
+
+    public void setProblema(String problema) {
+        this.problema = problema;
+    }
 }
