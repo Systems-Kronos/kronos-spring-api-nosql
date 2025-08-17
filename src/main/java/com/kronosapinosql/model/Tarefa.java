@@ -18,11 +18,11 @@ public class Tarefa {
 
     @Field(name = "nCdUsuarioResponsavel")
     @DBRef
-    private Usuario usuario;
+    private String nCdUsuarioResponsavel;
 
     @DBRef
     @Field(name = "nCdHabilidade")
-    private Habilidade habilidade;
+    private String nCdHabilidade;
 
     @Field(name = "iGravidade")
     private Integer gravidade ;
@@ -36,23 +36,23 @@ public class Tarefa {
     @Field(name = "nTempoEstimado")
     private Double tempoEstimado;
 
-    public Tarefa(String nCdTarefa, String nome, String descricao, Usuario usuario, Habilidade habilidade, Integer gravidade, Integer urgencia, Integer tendencia, Double tempoEstimado) {
+    public Tarefa(String nCdTarefa, String nome, String descricao, String nCdUsuarioResponsavel, String nCdHabilidade, Integer gravidade, Integer urgencia, Integer tendencia, Double tempoEstimado) {
         this.nCdTarefa = nCdTarefa;
         this.nome = nome;
         this.descricao = descricao;
-        this.usuario = usuario;
-        this.habilidade = habilidade;
+        this.nCdUsuarioResponsavel = nCdUsuarioResponsavel;
+        this.nCdHabilidade = nCdHabilidade;
         this.gravidade = gravidade;
         this.urgencia = urgencia;
         this.tendencia = tendencia;
         this.tempoEstimado = tempoEstimado;
     }
 
-    public Tarefa(String nome, String descricao, Usuario usuario, Habilidade habilidade, Integer gravidade, Integer urgencia, Integer tendencia, Double tempoEstimado) {
+    public Tarefa(String nome, String descricao, String nCdUsuarioResponsavel, String nCdHabilidade, Integer gravidade, Integer urgencia, Integer tendencia, Double tempoEstimado) {
         this.nome = nome;
         this.descricao = descricao;
-        this.usuario = usuario;
-        this.habilidade = habilidade;
+        this.nCdUsuarioResponsavel = nCdUsuarioResponsavel;
+        this.nCdHabilidade = nCdHabilidade;
         this.gravidade = gravidade;
         this.urgencia = urgencia;
         this.tendencia = tendencia;
@@ -85,20 +85,20 @@ public class Tarefa {
         this.descricao = descricao;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public String getnCdUsuarioResponsavel() {
+        return nCdUsuarioResponsavel;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public String setnCdUsuarioResponsavel(String nCdUsuarioResponsavel) {
+        return nCdUsuarioResponsavel;
     }
 
-    public Habilidade getHabilidade() {
-        return habilidade;
+    public String getnCdHabilidade() {
+        return nCdHabilidade;
     }
 
-    public void setHabilidade(Habilidade habilidade) {
-        this.habilidade = habilidade;
+    public void setnCdHabilidade(String nCdHabilidade) {
+        this.nCdHabilidade = nCdHabilidade;
     }
 
     public Integer getGravidade() {

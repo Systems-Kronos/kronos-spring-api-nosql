@@ -33,8 +33,8 @@ public class TarefaService {
                 .map(tarefa -> {
                     tarefa.setNome(novaTarefa.getNome());
                     tarefa.setDescricao(novaTarefa.getDescricao());
-                    tarefa.setUsuario(novaTarefa.getUsuario());
-                    tarefa.setHabilidade(novaTarefa.getHabilidade());
+                    tarefa.setnCdUsuarioResponsavel(novaTarefa.getnCdUsuarioResponsavel());
+                    tarefa.setnCdHabilidade(novaTarefa.getnCdHabilidade());
                     tarefa.setGravidade(novaTarefa.getGravidade());
                     tarefa.setUrgencia(novaTarefa.getUrgencia());
                     tarefa.setTendencia(novaTarefa.getTendencia());
