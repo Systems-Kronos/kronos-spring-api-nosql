@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/reports")
+@RequestMapping("/api/report")
 @RestController
 @Tag(name = "Reports", description = "Operações relacionadas aos reports")
 public class ReportController {
