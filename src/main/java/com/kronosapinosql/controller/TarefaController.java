@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/tarefas")
+@RequestMapping("/api/tarefa")
 @RestController
 @Tag(name = "Tarefas", description = "Operações relacionadas as tarefas")
 public class TarefaController {
