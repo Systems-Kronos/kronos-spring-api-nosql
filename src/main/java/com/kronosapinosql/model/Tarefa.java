@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "tarefas")
 public class Tarefa {
-
     @Id
     @Field(name = "nCdTarefa")
     private String id;

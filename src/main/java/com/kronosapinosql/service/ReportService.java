@@ -26,6 +26,7 @@ public class ReportService {
     public Report salvar(Report report) {
         return reportRepository.save(report);
     }
+
     public Report atualizar(String id, Report novoReport) {
         return reportRepository.findById(id)
                 .map(report -> {
