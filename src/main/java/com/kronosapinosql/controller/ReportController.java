@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @Tag(name = "Reports", description = "Operações relacionadas aos reports")
 public class ReportController {
-
     private final ReportService reportService;
 
     public ReportController(ReportService reportService) {
@@ -44,7 +43,6 @@ public class ReportController {
     @PostMapping("/adicionar")
     public ResponseEntity<Report> inserirReport(@RequestBody Report report) {
         Report salvo = reportService.salvar(report);
-
         return ResponseEntity.status(201).body(salvo);
     }
 
@@ -58,6 +56,7 @@ public class ReportController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @Operation(summary = "Deleta um Report pelo ID")
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> deletarReport(@PathVariable String id) {
