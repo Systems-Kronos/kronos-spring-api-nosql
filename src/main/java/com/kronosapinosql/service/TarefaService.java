@@ -9,7 +9,6 @@ import java.util.Optional;
 
 @Service
 public class TarefaService {
-
     private final TarefaRepository tarefaRepository;
 
     public TarefaService(TarefaRepository tarefaRepository) {
@@ -33,8 +32,8 @@ public class TarefaService {
                 .map(tarefa -> {
                     tarefa.setNome(novaTarefa.getNome());
                     tarefa.setDescricao(novaTarefa.getDescricao());
-                    tarefa.setnCdUsuarioResponsavel(novaTarefa.getnCdUsuarioResponsavel());
-                    tarefa.setnCdHabilidade(novaTarefa.getnCdHabilidade());
+                    tarefa.setUsuarioResponsavel(novaTarefa.getUsuarioResponsavel());
+                    tarefa.setHabilidade(novaTarefa.getHabilidade());
                     tarefa.setGravidade(novaTarefa.getGravidade());
                     tarefa.setUrgencia(novaTarefa.getUrgencia());
                     tarefa.setTendencia(novaTarefa.getTendencia());
