@@ -48,7 +48,7 @@ public class CalendarioService {
                     calendario.setAtestado(novoCalendario.getAtestado());
                     return calendarioRepository.save(calendario);
                 })
-                .orElseThrow(() -> new RuntimeException("Report não encontrada!"));
+                .orElseThrow(() -> new RuntimeException("Registro não encontrada!"));
     }
 
     public void deletar(String id) {
