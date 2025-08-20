@@ -13,7 +13,6 @@ import java.util.List;
 @RestController
 @Tag(name = "Tarefas", description = "Operações relacionadas as tarefas")
 public class TarefaController {
-
     private final TarefaService tarefaService;
 
     public TarefaController(TarefaService tarefaService) {
@@ -55,6 +54,7 @@ public class TarefaController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @Operation(summary = "Deleta uma tarefa pelo ID")
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> deletarTarefa(@PathVariable String id) {
