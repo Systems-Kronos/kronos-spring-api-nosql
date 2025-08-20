@@ -9,7 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class Tarefa {
 
     @Id
-    private String nCdTarefa;
+    @Field(name = "nCdTarefa")
+    private String id;
     @Field(name = "cNmTarefa")
     private String nome;
 
@@ -36,8 +37,8 @@ public class Tarefa {
     @Field(name = "nTempoEstimado")
     private Double tempoEstimado;
 
-    public Tarefa(String nCdTarefa, String nome, String descricao, String nCdUsuarioResponsavel, String nCdHabilidade, Integer gravidade, Integer urgencia, Integer tendencia, Double tempoEstimado) {
-        this.nCdTarefa = nCdTarefa;
+    public Tarefa(String id, String nome, String descricao, String nCdUsuarioResponsavel, String nCdHabilidade, Integer gravidade, Integer urgencia, Integer tendencia, Double tempoEstimado) {
+        this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.nCdUsuarioResponsavel = nCdUsuarioResponsavel;
@@ -61,12 +62,12 @@ public class Tarefa {
 
     public Tarefa () {}
 
-    public String getnCdTarefa() {
-        return nCdTarefa;
+    public String getid() {
+        return id;
     }
 
-    public void setnCdTarefa(String nCdTarefa) {
-        this.nCdTarefa = nCdTarefa;
+    public void setid(String id) {
+        this.id = id;
     }
 
     public String getNome() {

@@ -24,7 +24,7 @@ public class ReportController {
 
     @Operation(summary = "Lista todos os reports")
     @GetMapping("/listar")
-    public ResponseEntity<List<Report>> listarTodasTarefas() {
+    public ResponseEntity<List<Report>> listarTodasReports() {
         List<Report> reports = reportService.listarTodosReports();
         if (reports.isEmpty()) {
             return ResponseEntity.noContent().build();
