@@ -1,9 +1,7 @@
 package com.kronosapinosql.service;
 
 import com.kronosapinosql.model.Report;
-import com.kronosapinosql.model.Tarefa;
 import com.kronosapinosql.repository.ReportRepository;
-import com.kronosapinosql.repository.TarefaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,9 +1,7 @@
 package com.kronosapinosql.controller;
 
 import com.kronosapinosql.model.Report;
-import com.kronosapinosql.model.Tarefa;
 import com.kronosapinosql.service.ReportService;
-import com.kronosapinosql.service.TarefaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +22,7 @@ public class ReportController {
 
     @Operation(summary = "Lista todos os reports")
     @GetMapping("/listar")
-    public ResponseEntity<List<Report>> listarTodasReports() {
+    public ResponseEntity<List<Report>> listarTodosReports() {
         List<Report> reports = reportService.listarTodosReports();
         if (reports.isEmpty()) {
             return ResponseEntity.noContent().build();

@@ -4,9 +4,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.data.redis.core.index.PathBasedRedisIndexDefinition;
-
-import java.lang.ref.PhantomReference;
 
 @Document(collection = "report")
 public class Report {
