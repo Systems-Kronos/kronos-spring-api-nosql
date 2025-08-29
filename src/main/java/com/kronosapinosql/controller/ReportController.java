@@ -20,7 +20,7 @@ public class ReportController {
     }
 
     @Operation(summary = "Lista todos os reports")
-    @GetMapping("/listar")
+    @GetMapping("/selecionar")
     public ResponseEntity<List<Report>> listarTodosReports() {
         List<Report> reports = reportService.listarTodosReports();
         if (reports.isEmpty()) {
@@ -30,7 +30,7 @@ public class ReportController {
     }
 
     @Operation(summary = "Busca report pelo ID")
-    @GetMapping("/listar/{id}")
+    @GetMapping("/selecionar/{id}")
     public ResponseEntity<Report> buscarPorId(@PathVariable String id) {
         return reportService.buscarPorId(id)
                 .map(ResponseEntity::ok)

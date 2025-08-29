@@ -20,7 +20,7 @@ public class CalendarioController {
     }
 
     @Operation(summary = "Lista todos os registros do calendário")
-    @GetMapping("/listar")
+    @GetMapping("/selecionar")
     public ResponseEntity<List<Calendario>> listarTodosCalendarios() {
         List<Calendario> calendarios = calendarioService.listarTodosCalendarios();
         if (calendarios.isEmpty()) {
@@ -30,7 +30,7 @@ public class CalendarioController {
     }
 
     @Operation(summary = "Busca calendario pelo ID")
-    @GetMapping("/listar/{id}")
+    @GetMapping("/selecionar/{id}")
     public ResponseEntity<Calendario> buscarPorId(@PathVariable String id) {
         return calendarioService.buscarPorId(id)
                 .map(ResponseEntity::ok)
@@ -38,14 +38,14 @@ public class CalendarioController {
     }
 
     @Operation(summary = "Busca calendario pelo ID do usuário")
-    @GetMapping("/listar/usuario/{idUsuario}")
+    @GetMapping("/selecionar/usuario/{idUsuario}")
     public ResponseEntity<List<Calendario>> buscarPorUsuario(@PathVariable Integer idUsuario) {
         List<Calendario> calendarios = calendarioService.buscarPorUsuario(idUsuario);
         return ResponseEntity.ok(calendarios);
     }
 
     @Operation(summary = "Busca calendario por presenca")
-    @GetMapping("/listar/presenca/{presenca}")
+    @GetMapping("/selecionar/presenca/{presenca}")
     public ResponseEntity<List<Calendario>> buscarPorPresenca(@PathVariable Boolean presenca) {
         List<Calendario> calendarios = calendarioService.buscarPorPresenca(presenca);
         return ResponseEntity.ok(calendarios);
