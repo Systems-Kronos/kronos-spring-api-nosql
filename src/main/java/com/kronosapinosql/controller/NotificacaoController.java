@@ -20,7 +20,7 @@ public class NotificacaoController {
     }
 
     @Operation(summary = "Lista todos as notificações")
-    @GetMapping("/listar")
+    @GetMapping("/selecionar")
     public ResponseEntity<List<Notificacao>> listarTodasNotificacoes() {
         List<Notificacao> notificacoes = notificacaoService.listarTodasNotificacoes();
         if (notificacoes.isEmpty()) {
@@ -30,7 +30,7 @@ public class NotificacaoController {
     }
 
     @Operation(summary = "Busca notificação pelo ID")
-    @GetMapping("/listar/{id}")
+    @GetMapping("/selecionar/{id}")
     public ResponseEntity<Notificacao> buscarPorId(@PathVariable String id) {
         return notificacaoService.buscarPorId(id)
                 .map(ResponseEntity::ok)

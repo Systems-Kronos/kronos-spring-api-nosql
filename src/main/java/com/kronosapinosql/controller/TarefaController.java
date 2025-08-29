@@ -20,7 +20,7 @@ public class TarefaController {
     }
 
     @Operation(summary = "Lista todas as tarefas")
-    @GetMapping("/listar")
+    @GetMapping("/selecionar")
     public ResponseEntity<List<Tarefa>> listarTodasTarefas() {
         List<Tarefa> tarefas = tarefaService.listarTodasTarefas();
         if (tarefas.isEmpty()) {
@@ -30,7 +30,7 @@ public class TarefaController {
     }
 
     @Operation(summary = "Busca tarefa pelo ID")
-    @GetMapping("/listar/{id}")
+    @GetMapping("/selecionar/{id}")
     public ResponseEntity<Tarefa> buscarPorId(@PathVariable String id) {
         return tarefaService.buscarPorId(id)
                 .map(ResponseEntity::ok)
@@ -38,7 +38,7 @@ public class TarefaController {
     }
 
     @Operation(summary = "Inserir uma nova tarefa")
-    @PostMapping("/inserir")
+    @PostMapping("/adicionar")
     public ResponseEntity<Tarefa> inserirTarefa(@RequestBody Tarefa tarefa) {
         Tarefa salvo = tarefaService.salvar(tarefa);
         return ResponseEntity.status(201).body(salvo);
