@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/api/calendario/")
+@RequestMapping("/api/calendario")
 @RestController
 @Tag(name = "Calendario", description = "Operações relacionadas ao calendario")
 public class CalendarioController {
