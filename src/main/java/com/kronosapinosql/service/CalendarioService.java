@@ -24,11 +24,11 @@ public class CalendarioService {
     }
 
     public List<Calendario> buscarPorUsuario(Integer usuario) {
-        return calendarioRepository.buscarPorUsuario(usuario);
+        return calendarioRepository.findByUsuario(usuario);
     }
 
     public List<Calendario> buscarPorPresenca(Boolean presenca) {
-        return calendarioRepository.buscarPorPresenca(presenca);
+        return calendarioRepository.findByPresenca(presenca);
     }
 
     public Calendario salvar(Calendario calendario) {
