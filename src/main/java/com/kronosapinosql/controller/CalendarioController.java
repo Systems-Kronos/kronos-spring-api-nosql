@@ -4,6 +4,7 @@ import com.kronosapinosql.model.Calendario;
 import com.kronosapinosql.service.CalendarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,14 +54,14 @@ public class CalendarioController {
 
     @Operation(summary = "Inserir um novo calendario")
     @PostMapping("/adicionar")
-    public ResponseEntity<Calendario> inserirReport(@RequestBody Calendario calendario) {
+    public ResponseEntity<Calendario> inserirReport(@Valid @RequestBody Calendario calendario) {
         Calendario salvo = calendarioService.salvar(calendario);
         return ResponseEntity.status(201).body(salvo);
     }
 
     @Operation(summary = "Atualiza um calendario existente")
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Calendario> atualizarReport(@PathVariable String id, @RequestBody Calendario calendario) {
+    public ResponseEntity<Calendario> atualizarReport(@PathVariable String id, @Valid @RequestBody Calendario calendario) {
         try {
             Calendario atualizado = calendarioService.atualizar(id, calendario);
             return ResponseEntity.ok(atualizado);

@@ -1,5 +1,8 @@
 package com.kronosapinosql.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,8 +21,12 @@ public class Notificacao {
     private String id;
 
     @Field(name = "nCdUsuario")
+    @NotNull(message = "O id do usuário não pode estar vazio")
+    @Size(min = 1, max = 100)
     private Integer usuario;
 
     @Field(name = "nCdMensagem")
+    @NotNull(message = "O id da mensagem não pode estar vazia")
+    @Size(min = 1, max = 100)
     private Integer mensagem;
 }
