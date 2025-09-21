@@ -4,6 +4,7 @@ import com.kronosapinosql.model.Notificacao;
 import com.kronosapinosql.service.NotificacaoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,7 @@ public class NotificacaoController {
 
     @Operation(summary = "Busca notificação pelo ID")
     @GetMapping("/selecionar/{id}")
-    public ResponseEntity<Notificacao> buscarPorId(@PathVariable String id) {
+    public ResponseEntity<Notificacao> buscarPorId( @PathVariable String id) {
         return notificacaoService.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -39,14 +40,14 @@ public class NotificacaoController {
 
     @Operation(summary = "Inserir uma nova notificação")
     @PostMapping("/adicionar")
-    public ResponseEntity<Notificacao> inserirNotificacao(@RequestBody Notificacao notificacao) {
+    public ResponseEntity<Notificacao> inserirNotificacao(@Valid @RequestBody Notificacao notificacao) {
         Notificacao salvo = notificacaoService.salvar(notificacao);
         return ResponseEntity.status(201).body(salvo);
     }
 
     @Operation(summary = "Atualiza uma notificação existente")
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Notificacao> atualizarNotificacao(@PathVariable String id, @RequestBody Notificacao notificacao) {
+    public ResponseEntity<Notificacao> atualizarNotificacao(@PathVariable String id, @Valid @RequestBody Notificacao notificacao) {
         try {
             Notificacao atualizado = notificacaoService.atualizar(id, notificacao);
             return ResponseEntity.ok(atualizado);
