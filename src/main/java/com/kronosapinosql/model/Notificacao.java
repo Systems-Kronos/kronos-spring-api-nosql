@@ -15,18 +15,14 @@ import org.springframework.data.redis.core.RedisHash;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@RedisHash("Notificacao")
+@RedisHash("notificacao")
 public class Notificacao {
     @Id
     private String id;
 
-    @Field(name = "nCdUsuario")
     @NotNull(message = "O id do usuário não pode estar vazio")
-    @Size(min = 1, max = 100)
     private Integer usuario;
 
-    @Field(name = "nCdMensagem")
     @NotNull(message = "O id da mensagem não pode estar vazia")
-    @Size(min = 1, max = 100)
     private Integer mensagem;
 }
