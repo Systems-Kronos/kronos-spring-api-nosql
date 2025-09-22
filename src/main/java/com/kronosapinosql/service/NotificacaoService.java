@@ -1,43 +1,57 @@
 package com.kronosapinosql.service;
 
-import com.kronosapinosql.model.Notificacao;
-import com.kronosapinosql.repository.NotificacaoRepository;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.stereotype.Service;
+import org.springframework.data.redis.core.Cursor;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class NotificacaoService {
-    private final NotificacaoRepository notificacaoRepository;
 
-    public NotificacaoService(NotificacaoRepository notificacaoRepository) {
-        this.notificacaoRepository = notificacaoRepository;
+    private final RedisTemplate<String, Object> redisTemplate;
+
+    public NotificacaoService(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
     }
 
-    public List<Notificacao> listarTodasNotificacoes() {
-        return (List<Notificacao>) notificacaoRepository.findAll();
-    }
+    public Map<String, Map<Object, Object>> listarTodasNotificacoes() {
+        Map<String, Map<Object, Object>> resultado = new HashMap<>();
 
-    public Optional<Notificacao> buscarPorId(String id) {
-        return notificacaoRepository.findById(id);
-    }
+        ScanOptions options = ScanOptions.scanOptions().match("notificacao:*").count(100).build();
+        Cursor<byte[]> cursor = redisTemplate.getConnectionFactory()
+                .getConnection()
+                .scan(options);
 
-    public Notificacao salvar(Notificacao notificacao) {
-        return notificacaoRepository.save(notificacao);
-    }
+        while (cursor.hasNext()) {
+            String key = new String(cursor.next());
+            Map<Object, Object> hash = redisTemplate.opsForHash().entries(key);
+            if (!hash.isEmpty()) {
+                resultado.put(key, hash); // mapeia pelo nome da chave
+            }
+        }
 
-    public Notificacao atualizar(String id, Notificacao novaNotificacao) {
-        return notificacaoRepository.findById(id)
-                .map(notificacao -> {
-                    notificacao.setUsuario(novaNotificacao.getUsuario());
-                    notificacao.setMensagem(novaNotificacao.getUsuario());
-                    return notificacaoRepository.save(notificacao);
-                })
-                .orElseThrow(() -> new RuntimeException("Notificação não encontrada!"));
+        return resultado;
     }
+    public List<Map<Object, Object>> listarNotificacoesDoUsuario(Integer usuarioId) {
+        List<Map<Object, Object>> resultado = new ArrayList<>();
 
-    public void deletar(String id) {
-        notificacaoRepository.deleteById(id);
+        // 1️⃣ Pega os IDs das notificações do set do usuário
+        String chaveSet = "usuario:" + usuarioId + ":notificacoes";
+        Set<Object> idsNotificacoes = redisTemplate.opsForSet().members(chaveSet);
+
+        if (idsNotificacoes != null) {
+            for (Object id : idsNotificacoes) {
+                // 2️⃣ Pega cada hash de notificação
+                String chaveNotificacao = "notificacao:" + id;
+                Map<Object, Object> notificacao = redisTemplate.opsForHash().entries(chaveNotificacao);
+                if (!notificacao.isEmpty()) {
+                    resultado.add(notificacao);
+                }
+            }
+        }
+
+        return resultado;
     }
 }

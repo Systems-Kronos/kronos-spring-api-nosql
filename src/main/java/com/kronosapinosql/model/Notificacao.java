@@ -1,5 +1,8 @@
 package com.kronosapinosql.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,14 +15,14 @@ import org.springframework.data.redis.core.RedisHash;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@RedisHash("Notificacao")
+@RedisHash("notificacao")
 public class Notificacao {
     @Id
     private String id;
 
-    @Field(name = "nCdUsuario")
+    @NotNull(message = "O id do usuário não pode estar vazio")
     private Integer usuario;
 
-    @Field(name = "nCdMensagem")
+    @NotNull(message = "O id da mensagem não pode estar vazia")
     private Integer mensagem;
 }
