@@ -26,9 +26,9 @@ public class Calendario {
     @Field(name = "nCdUsuario")
     private Integer usuario;
 
-    @NotNull(message = "Dia não pode ser nulo")
-    @Field(name = "dDia")
-    private Date dia;
+    @NotNull(message = "Evento não pode ser nulo")
+    @Field(name = "dEvento")
+    private Date evento;
 
     @NotNull(message = "Presença não pode ser nula")
     @Field(name = "bPresenca")
