@@ -39,7 +39,7 @@ public class CalendarioService {
         return calendarioRepository.findById(id)
                 .map(calendario -> {
                     calendario.setUsuario(novoCalendario.getUsuario());
-                    calendario.setDia(novoCalendario.getDia());
+                    calendario.setEvento(novoCalendario.getEvento());
                     calendario.setPresenca(novoCalendario.getPresenca());
                     calendario.setObservacao(novoCalendario.getObservacao());
                     calendario.setCrm(novoCalendario.getCrm());
