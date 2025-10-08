@@ -45,6 +45,13 @@ public class CalendarioController {
         return ResponseEntity.ok(calendarios);
     }
 
+    @Operation(summary = "Busca calendario pelo ID do gestor")
+    @GetMapping("/selecionar/gestor/{idGestor}")
+    public ResponseEntity<List<Calendario>> buscarPorGestor(@PathVariable Integer idGestor) {
+        List<Calendario> calendarios = calendarioService.buscarPorGestor(idGestor);
+        return ResponseEntity.ok(calendarios);
+    }
+
     @Operation(summary = "Busca calendario por presenca")
     @GetMapping("/selecionar/presenca/{presenca}")
     public ResponseEntity<List<Calendario>> buscarPorPresenca(@PathVariable Boolean presenca) {

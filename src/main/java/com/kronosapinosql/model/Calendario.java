@@ -18,13 +18,16 @@ import java.util.Date;
 @AllArgsConstructor
 @Document(collection = "calendario")
 public class Calendario {
-
     @Id
     private String id;
 
     @NotNull(message = "Usuário não pode ser nulo")
     @Field(name = "nCdUsuario")
     private Integer usuario;
+
+    @NotNull(message = "Id do gestor não pode ser nulo")
+    @Field(name = "nCdGestor")
+    private Integer idGestor;
 
     @NotNull(message = "Evento não pode ser nulo")
     @Field(name = "dEvento")
@@ -53,5 +56,4 @@ public class Calendario {
     @Size(max = 500, message = "Atestado pode ter no máximo 500 caracteres")
     @Field(name = "cAtestado")
     private String atestado;
-
 }

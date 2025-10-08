@@ -8,5 +8,7 @@ import java.util.List;
 public interface CalendarioRepository extends MongoRepository<Calendario, String> {
     List<Calendario> findByUsuario(Integer usuario);
 
+    List<Calendario> findByIdGestor(Integer idGestor);
+
     List<Calendario> findByPresenca(Boolean presenca);
 }
