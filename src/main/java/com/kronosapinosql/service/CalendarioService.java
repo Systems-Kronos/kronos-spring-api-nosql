@@ -27,6 +27,10 @@ public class CalendarioService {
         return calendarioRepository.findByUsuario(usuario);
     }
 
+    public List<Calendario> buscarPorGestor(Integer idGestor) {
+        return calendarioRepository.findByIdGestor(idGestor);
+    }
+
     public List<Calendario> buscarPorPresenca(Boolean presenca) {
         return calendarioRepository.findByPresenca(presenca);
     }

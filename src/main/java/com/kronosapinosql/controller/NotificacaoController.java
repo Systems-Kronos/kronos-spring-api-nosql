@@ -13,7 +13,6 @@ import java.util.Map;
 @RequestMapping("/api/notificacoes")
 @Tag(name = "Notificacao", description = "Operações relacionadas às notificações (Redis)")
 public class NotificacaoController {
-
     private final NotificacaoService notificacaoService;
 
     public NotificacaoController(NotificacaoService notificacaoService) {
@@ -38,6 +37,4 @@ public class NotificacaoController {
         }
         return ResponseEntity.ok(notificacoes);
     }
-
-
 }
