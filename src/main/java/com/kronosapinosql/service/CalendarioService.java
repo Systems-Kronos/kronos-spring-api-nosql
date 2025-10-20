@@ -1,5 +1,6 @@
 package com.kronosapinosql.service;
 
+import com.kronosapinosql.dto.ObservacaoDTO;
 import com.kronosapinosql.model.Calendario;
 import com.kronosapinosql.repository.CalendarioRepository;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,12 @@ public class CalendarioService {
 
     public List<Calendario> buscarPorPresenca(Boolean presenca) {
         return calendarioRepository.findByPresenca(presenca);
+    }
+    public List<ObservacaoDTO> buscarObservacoesEDiasPorGestor(Integer idGestor) {
+        List<Calendario> calendarios = calendarioRepository.findByIdGestor(idGestor);
+        return calendarios.stream()
+                .map(c -> new ObservacaoDTO(c.getObservacao(), c.getEvento()))
+                .toList();
     }
 
     public Calendario salvar(Calendario calendario) {
