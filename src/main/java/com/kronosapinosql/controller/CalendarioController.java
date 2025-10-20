@@ -1,5 +1,6 @@
 package com.kronosapinosql.controller;
 
+import com.kronosapinosql.dto.ObservacaoDTO;
 import com.kronosapinosql.model.Calendario;
 import com.kronosapinosql.service.CalendarioService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -53,10 +54,14 @@ public class CalendarioController {
     }
 
     @Operation(summary = "Busca calendario por presenca")
-    @GetMapping("/selecionar/presenca/{presenca}")
+    @GetMapping("/selecionarPresenca/{presenca}")
     public ResponseEntity<List<Calendario>> buscarPorPresenca(@PathVariable Boolean presenca) {
         List<Calendario> calendarios = calendarioService.buscarPorPresenca(presenca);
         return ResponseEntity.ok(calendarios);
+    }
+    @GetMapping("/selecionarObservacoesGestor/{idGestor}")
+    public List<ObservacaoDTO> buscarObservacoesEDiasPorGestor(@PathVariable Integer idGestor) {
+        return calendarioService.buscarObservacoesEDiasPorGestor(idGestor);
     }
 
     @Operation(summary = "Inserir um novo calendario")
