@@ -20,7 +20,7 @@ public class NotificacaoController {
         this.notificacaoService = notificacaoService;
     }
 
-    @Operation(summary = "Lista todas as notificações (Redis) filtradas")
+    @Operation(summary = "Lista todas as notificações (apenas cMensagem e dCriacao)")
     @GetMapping("/selecionar")
     public ResponseEntity<List<Map<String, String>>> listarTodasNotificacoes() {
         List<Map<String, String>> notificacoes = notificacaoService.listarTodasNotificacoesJson();
@@ -30,10 +30,10 @@ public class NotificacaoController {
         return ResponseEntity.ok(notificacoes);
     }
 
-    @Operation(summary = "Lista notificações do usuário (Redis) com campos filtrados")
-    @GetMapping("/usuario/{id}")
+    @Operation(summary = "Lista notificações de um usuário específico")
+    @GetMapping("/selecionar/{id}")
     public ResponseEntity<List<Map<String, String>>> listarNotificacoesDoUsuario(@PathVariable Integer id) {
-        List<Map<String, String>> notificacoes = notificacaoService.listarNotificacoesDoUsuarioJson(id);
+        List<Map<String, String>> notificacoes = notificacaoService.listarNotificacoesDoUsuario(id);
         if (notificacoes.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
