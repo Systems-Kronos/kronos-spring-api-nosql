@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -19,7 +20,7 @@ public class NotificacaoService {
         this.redisTemplate = redisTemplate;
     }
 
-    // Salvar notificação
+    // Salvar notificação com TTL
     public void salvarNotificacao(NotificacaoDTO dto, long ttlSegundos) {
         String idNotificacao = UUID.randomUUID().toString();
         Notificacao notificacao = dto.toModel(idNotificacao);
@@ -28,8 +29,8 @@ public class NotificacaoService {
 
         Map<String, Object> dados = new HashMap<>();
         dados.put("id", notificacao.getId());
-        dados.put("usuario", notificacao.getUsuario());
-        dados.put("mensagem", notificacao.getMensagem()); // apenas ID da mensagem
+        dados.put("nCdUsuario", notificacao.getUsuario());
+        dados.put("cMensagem", notificacao.getMensagem());
 
         redisTemplate.opsForHash().putAll(chave, dados);
 
@@ -38,36 +39,61 @@ public class NotificacaoService {
         }
     }
 
-    // Listar notificações de todos os usuários
-    public Map<String, Map<Object, Object>> listarTodasNotificacoes() {
-        Map<String, Map<Object, Object>> resultado = new HashMap<>();
-        ScanOptions options = ScanOptions.scanOptions().match("usuario:*:notificacao:*").count(100).build();
-        Cursor<byte[]> cursor = redisTemplate.getConnectionFactory().getConnection().scan(options);
+    // Lista todas as notificações filtrando campos cMensagem e dCriacao
+    public List<Map<String, String>> listarTodasNotificacoesJson() {
+        List<Map<String, String>> resultado = new ArrayList<>();
+        ScanOptions options = ScanOptions.scanOptions()
+                .match("usuario:*:notificacao:*")
+                .count(100)
+                .build();
 
-        while (cursor.hasNext()) {
-            String key = new String(cursor.next());
-            Map<Object, Object> hash = redisTemplate.opsForHash().entries(key);
-            if (!hash.isEmpty()) {
-                resultado.put(key, hash);
+        try (Cursor<byte[]> cursor = redisTemplate.getConnectionFactory().getConnection().scan(options)) {
+            while (cursor.hasNext()) {
+                String key = new String(cursor.next());
+                Map<Object, Object> hash = redisTemplate.opsForHash().entries(key);
+                if (!hash.isEmpty()) {
+                    Map<String, String> json = hash.entrySet().stream()
+                            .filter(e -> e.getKey().equals("cMensagem") || e.getKey().equals("dCriacao"))
+                            .collect(Collectors.toMap(
+                                    e -> e.getKey().toString(),
+                                    e -> e.getValue() != null ? e.getValue().toString() : ""
+                            ));
+                    resultado.add(json);
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        resultado.sort((n1, n2) -> n2.get("dCriacao").compareTo(n1.get("dCriacao")));
         return resultado;
     }
 
-    // Listar notificações de um usuário específico
-    public List<Map<Object, Object>> listarNotificacoesDoUsuario(Integer usuarioId) {
-        List<Map<Object, Object>> resultado = new ArrayList<>();
+    // Lista notificações de um usuário específico
+    public List<Map<String, String>> listarNotificacoesDoUsuario(Integer usuarioId) {
+        List<Map<String, String>> resultado = new ArrayList<>();
         String padraoChave = "usuario:" + usuarioId + ":notificacao:*";
         ScanOptions options = ScanOptions.scanOptions().match(padraoChave).count(100).build();
-        Cursor<byte[]> cursor = redisTemplate.getConnectionFactory().getConnection().scan(options);
 
-        while (cursor.hasNext()) {
-            String key = new String(cursor.next());
-            Map<Object, Object> hash = redisTemplate.opsForHash().entries(key);
-            if (!hash.isEmpty()) {
-                resultado.add(hash);
+        try (Cursor<byte[]> cursor = redisTemplate.getConnectionFactory().getConnection().scan(options)) {
+            while (cursor.hasNext()) {
+                String key = new String(cursor.next());
+                Map<Object, Object> hash = redisTemplate.opsForHash().entries(key);
+                if (!hash.isEmpty()) {
+                    Map<String, String> json = hash.entrySet().stream()
+                            .filter(e -> e.getKey().equals("cMensagem") || e.getKey().equals("dCriacao"))
+                            .collect(Collectors.toMap(
+                                    e -> e.getKey().toString(),
+                                    e -> e.getValue() != null ? e.getValue().toString() : ""
+                            ));
+                    resultado.add(json);
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        resultado.sort((n1, n2) -> n2.get("dCriacao").compareTo(n1.get("dCriacao")));
         return resultado;
     }
 }
