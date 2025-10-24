@@ -13,25 +13,27 @@ import java.util.Map;
 @RequestMapping("/api/notificacoes")
 @Tag(name = "Notificacao", description = "Operações relacionadas às notificações (Redis)")
 public class NotificacaoController {
+
     private final NotificacaoService notificacaoService;
 
     public NotificacaoController(NotificacaoService notificacaoService) {
         this.notificacaoService = notificacaoService;
     }
 
-    @Operation(summary = "Lista todas as notificações (Redis)")
+    @Operation(summary = "Lista todas as notificações (Redis) filtradas")
     @GetMapping("/selecionar")
-    public ResponseEntity<Map<String, Map<Object, Object>>> listarTodasNotificacoes() {
-        Map<String, Map<Object, Object>> notificacoes = notificacaoService.listarTodasNotificacoes();
+    public ResponseEntity<List<Map<String, String>>> listarTodasNotificacoes() {
+        List<Map<String, String>> notificacoes = notificacaoService.listarTodasNotificacoesJson();
         if (notificacoes.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(notificacoes);
     }
 
-    @GetMapping("/selecionar/{id}")
-    public ResponseEntity<List<Map<Object, Object>>> listarNotificacoesDoUsuario(@PathVariable Integer id) {
-        List<Map<Object, Object>> notificacoes = notificacaoService.listarNotificacoesDoUsuario(id);
+    @Operation(summary = "Lista notificações do usuário (Redis) com campos filtrados")
+    @GetMapping("/usuario/{id}")
+    public ResponseEntity<List<Map<String, String>>> listarNotificacoesDoUsuario(@PathVariable Integer id) {
+        List<Map<String, String>> notificacoes = notificacaoService.listarNotificacoesDoUsuarioJson(id);
         if (notificacoes.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
