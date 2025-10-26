@@ -1,10 +1,8 @@
 package com.kronosapinosql.controller;
 
-import com.kronosapinosql.dto.NotificacaoDTO;
 import com.kronosapinosql.service.NotificacaoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,31 +20,23 @@ public class NotificacaoController {
         this.notificacaoService = notificacaoService;
     }
 
-    @Operation(summary = "Lista todas as notificações")
+    @Operation(summary = "Lista todas as notificações (apenas cMensagem e dCriacao)")
     @GetMapping("/selecionar")
-    public ResponseEntity<Map<String, Map<Object, Object>>> listarTodasNotificacoes() {
-        Map<String, Map<Object, Object>> notificacoes = notificacaoService.listarTodasNotificacoes();
+    public ResponseEntity<List<Map<String, String>>> listarTodasNotificacoes() {
+        List<Map<String, String>> notificacoes = notificacaoService.listarTodasNotificacoesJson();
         if (notificacoes.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(notificacoes);
     }
 
-    @Operation(summary = "Lista notificações de um usuário")
+    @Operation(summary = "Lista notificações de um usuário específico")
     @GetMapping("/selecionar/{id}")
-    public ResponseEntity<List<Map<Object, Object>>> listarNotificacoesDoUsuario(@PathVariable Integer id) {
-        List<Map<Object, Object>> notificacoes = notificacaoService.listarNotificacoesDoUsuario(id);
+    public ResponseEntity<List<Map<String, String>>> listarNotificacoesDoUsuario(@PathVariable Integer id) {
+        List<Map<String, String>> notificacoes = notificacaoService.listarNotificacoesDoUsuario(id);
         if (notificacoes.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(notificacoes);
-    }
-
-    @Operation(summary = "Cria uma nova notificação")
-    @PostMapping("/inserir")
-    public ResponseEntity<Void> criarNotificacao(@RequestBody @Valid NotificacaoDTO dto,
-                                                 @RequestParam(defaultValue = "0") long ttlSegundos) {
-        notificacaoService.salvarNotificacao(dto, ttlSegundos);
-        return ResponseEntity.ok().build();
     }
 }
