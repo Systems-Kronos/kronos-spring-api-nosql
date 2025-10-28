@@ -9,14 +9,14 @@ public class ObservacaoDTO {
 
     private String atestado;
 
-    private Boolean aceito;
+    private Integer usuario;
 
-    public ObservacaoDTO(String observacao, Date dia, Boolean presenca, String atestado, Boolean aceito) {
+    public ObservacaoDTO(String observacao, Date dia, Boolean presenca, String atestado, Integer usuario) {
         this.observacao = observacao;
         this.dia = dia;
         this.presenca = presenca;
         this.atestado = atestado;
-        this.aceito = aceito;
+        this.usuario = usuario;
     }
 
     public String getObservacao() {
@@ -33,7 +33,7 @@ public class ObservacaoDTO {
         return atestado;
     }
 
-    public Boolean getAceito() {
-        return aceito;
+    public Integer getUsuario() {
+        return usuario;
     }
 }
