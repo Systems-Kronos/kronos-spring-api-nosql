@@ -1,5 +1,6 @@
 package com.kronosapinosql.controller;
 
+import com.kronosapinosql.controller.docs.NotificacaoControllerDocs;
 import com.kronosapinosql.service.NotificacaoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,7 +13,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/notificacoes")
 @Tag(name = "Notificacao", description = "Operações relacionadas às notificações (Redis)")
-public class NotificacaoController {
+public class NotificacaoController implements NotificacaoControllerDocs {
 
     private final NotificacaoService notificacaoService;
 
@@ -20,8 +21,7 @@ public class NotificacaoController {
         this.notificacaoService = notificacaoService;
     }
 
-    @Operation(summary = "Lista todas as notificações (apenas cMensagem e dCriacao)")
-    @GetMapping("/selecionar")
+    @Override
     public ResponseEntity<List<Map<String, String>>> listarTodasNotificacoes() {
         List<Map<String, String>> notificacoes = notificacaoService.listarTodasNotificacoesJson();
         if (notificacoes.isEmpty()) {
@@ -30,8 +30,7 @@ public class NotificacaoController {
         return ResponseEntity.ok(notificacoes);
     }
 
-    @Operation(summary = "Lista notificações de um usuário específico")
-    @GetMapping("/selecionar/{id}")
+    @Override
     public ResponseEntity<List<Map<String, String>>> listarNotificacoesDoUsuario(@PathVariable Integer id) {
         List<Map<String, String>> notificacoes = notificacaoService.listarNotificacoesDoUsuario(id);
         if (notificacoes.isEmpty()) {
