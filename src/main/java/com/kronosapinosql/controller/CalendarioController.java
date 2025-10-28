@@ -1,5 +1,6 @@
 package com.kronosapinosql.controller;
 
+import com.kronosapinosql.controller.docs.CalendarioControllerDocs;
 import com.kronosapinosql.dto.ObservacaoDTO;
 import com.kronosapinosql.model.Calendario;
 import com.kronosapinosql.service.CalendarioService;
@@ -11,18 +12,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/api/calendario")
 @RestController
-@Tag(name = "Calendario", description = "Operações relacionadas ao calendario")
-public class CalendarioController {
+public class CalendarioController implements CalendarioControllerDocs {
     private final CalendarioService calendarioService;
 
     public CalendarioController(CalendarioService calendarioService) {
         this.calendarioService = calendarioService;
     }
 
-    @Operation(summary = "Lista todos os registros do calendário")
-    @GetMapping("/selecionar")
+    @Override
     public ResponseEntity<List<Calendario>> listarTodosCalendarios() {
         List<Calendario> calendarios = calendarioService.listarTodosCalendarios();
         if (calendarios.isEmpty()) {
@@ -31,48 +29,42 @@ public class CalendarioController {
         return ResponseEntity.ok(calendarios);
     }
 
-    @Operation(summary = "Busca calendario pelo ID")
-    @GetMapping("/selecionar/{id}")
+    @Override
     public ResponseEntity<Calendario> buscarPorId(@PathVariable String id) {
         return calendarioService.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @Operation(summary = "Busca calendario pelo ID do usuário")
-    @GetMapping("/selecionar/usuario/{idUsuario}")
+    @Override
     public ResponseEntity<List<Calendario>> buscarPorUsuario(@PathVariable Integer idUsuario) {
         List<Calendario> calendarios = calendarioService.buscarPorUsuario(idUsuario);
         return ResponseEntity.ok(calendarios);
     }
 
-    @Operation(summary = "Busca calendario pelo ID do gestor")
-    @GetMapping("/selecionar/gestor/{idGestor}")
+    @Override
     public ResponseEntity<List<Calendario>> buscarPorGestor(@PathVariable Integer idGestor) {
         List<Calendario> calendarios = calendarioService.buscarPorGestor(idGestor);
         return ResponseEntity.ok(calendarios);
     }
 
-    @Operation(summary = "Busca calendario por presenca")
-    @GetMapping("/selecionarPresenca/{presenca}")
+    @Override
     public ResponseEntity<List<Calendario>> buscarPorPresenca(@PathVariable Boolean presenca) {
         List<Calendario> calendarios = calendarioService.buscarPorPresenca(presenca);
         return ResponseEntity.ok(calendarios);
     }
-    @GetMapping("/selecionarObservacoesGestor/{idGestor}")
+    @Override
     public List<ObservacaoDTO> buscarObservacoesEDiasPorGestor(@PathVariable Integer idGestor) {
         return calendarioService.buscarObservacoesEDiasPorGestor(idGestor);
     }
 
-    @Operation(summary = "Inserir um novo calendario")
-    @PostMapping("/adicionar")
+    @Override
     public ResponseEntity<Calendario> inserirReport(@Valid @RequestBody Calendario calendario) {
         Calendario salvo = calendarioService.salvar(calendario);
         return ResponseEntity.status(201).body(salvo);
     }
 
-    @Operation(summary = "Atualiza um calendario existente")
-    @PutMapping("/atualizar/{id}")
+    @Override
     public ResponseEntity<Calendario> atualizarReport(@PathVariable String id, @Valid @RequestBody Calendario calendario) {
         try {
             Calendario atualizado = calendarioService.atualizar(id, calendario);
@@ -82,8 +74,17 @@ public class CalendarioController {
         }
     }
 
-    @Operation(summary = "Deleta um calendario pelo ID")
-    @DeleteMapping("/deletar/{id}")
+    @Override
+    public ResponseEntity<Calendario> atualizarStatus(@PathVariable String id, @Valid @RequestBody Calendario calendario) {
+        try {
+            Calendario atualizado = calendarioService.atualizarStatus(id, calendario);
+            return ResponseEntity.ok(atualizado);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @Override
     public ResponseEntity<Void> deletarReport(@PathVariable String id) {
         calendarioService.deletar(id);
         return ResponseEntity.noContent().build();
