@@ -44,7 +44,7 @@ public class CalendarioService {
     public List<ObservacaoDTO> buscarObservacoesEDiasPorGestor(Integer idGestor) {
         List<Calendario> calendarios = calendarioRepository.findByIdGestor(idGestor);
         return calendarios.stream()
-                .map(c -> new ObservacaoDTO(c.getObservacao(), c.getEvento()))
+                .map(c -> new ObservacaoDTO(c.getObservacao(), c.getEvento(), c.getPresenca()))
                 .toList();
     }
 
