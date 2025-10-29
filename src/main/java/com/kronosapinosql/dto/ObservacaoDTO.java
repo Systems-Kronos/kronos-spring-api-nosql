@@ -8,10 +8,10 @@ import lombok.Setter;
 import java.util.Date;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ObservacaoDTO {
+    private String id;
     private Integer usuario;
     private Date dia;
     private Boolean presenca;
