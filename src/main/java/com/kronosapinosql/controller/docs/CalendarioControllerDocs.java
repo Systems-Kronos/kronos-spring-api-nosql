@@ -1,5 +1,6 @@
 package com.kronosapinosql.controller.docs;
 
+import com.kronosapinosql.dto.AtualizarStatusDTO;
 import com.kronosapinosql.dto.ObservacaoDTO;
 import com.kronosapinosql.model.Calendario;
 import io.swagger.v3.oas.annotations.Operation;
@@ -83,7 +84,7 @@ public interface CalendarioControllerDocs {
             @ApiResponse(responseCode = "404", description = "Calendário não encontrado")
     })
     @PutMapping("/atualizarStatus/{id}")
-    ResponseEntity<Calendario> atualizarStatus(@PathVariable String id, @Valid @RequestBody Calendario calendario);
+    ResponseEntity<Calendario> atualizarStatus(@PathVariable String id, @Valid AtualizarStatusDTO atualizarStatusDTO);
 
     @Operation(summary = "Deleta um calendário pelo ID")
     @ApiResponses({

@@ -44,7 +44,7 @@ public class CalendarioService {
     public List<ObservacaoDTO> buscarObservacoesEDiasPorGestor(Integer idGestor) {
         List<Calendario> calendarios = calendarioRepository.findByIdGestor(idGestor);
         return calendarios.stream()
-                .map(c -> new ObservacaoDTO(c.getObservacao(), c.getEvento(), c.getPresenca(), c.getAtestado(), c.getUsuario()))
+                .map(c -> new ObservacaoDTO(c.getId() ,c.getObservacao(), c.getEvento(), c.getPresenca(), c.getAtestado(), c.getUsuario()))
                 .toList();
     }
 
@@ -79,14 +79,15 @@ public class CalendarioService {
     }
 
 
-    public Calendario atualizarStatus(String id, Calendario novoCalendario) {
+    public Calendario atualizarStatus(String id, Boolean aceito) {
         return calendarioRepository.findById(id)
                 .map(calendario -> {
-                    calendario.setAceito(novoCalendario.getAceito());
+                    calendario.setAceito(aceito);
                     return calendarioRepository.save(calendario);
                 })
                 .orElseThrow(() -> new RuntimeException("Registro não encontrado!"));
     }
+
 
     public void deletar(String id) {
         calendarioRepository.deleteById(id);
