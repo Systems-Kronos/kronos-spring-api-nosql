@@ -1,6 +1,7 @@
 package com.kronosapinosql.controller;
 
 import com.kronosapinosql.controller.docs.CalendarioControllerDocs;
+import com.kronosapinosql.dto.AtualizarStatusDTO;
 import com.kronosapinosql.dto.ObservacaoDTO;
 import com.kronosapinosql.model.Calendario;
 import com.kronosapinosql.service.CalendarioService;
@@ -69,13 +70,9 @@ public class CalendarioController implements CalendarioControllerDocs {
     }
 
     @Override
-    public ResponseEntity<Calendario> atualizarStatus(@PathVariable String id, @Valid @RequestBody Calendario calendario) {
-        try {
-            Calendario atualizado = calendarioService.atualizarStatus(id, calendario);
-            return ResponseEntity.ok(atualizado);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Calendario> atualizarStatus(@PathVariable String id, @RequestBody AtualizarStatusDTO dto) {
+        Calendario atualizado = calendarioService.atualizarStatus(id, dto.getAceito());
+        return ResponseEntity.ok(atualizado);
     }
 
     @Override
