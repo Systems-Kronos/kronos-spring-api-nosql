@@ -7,7 +7,6 @@ import lombok.Data;
 
 @Data
 public class NotificacaoDTO {
-
     @NotNull(message = "O usuário é obrigatório")
     @Positive(message = "O id do usuário deve ser positivo")
     private Integer usuario;

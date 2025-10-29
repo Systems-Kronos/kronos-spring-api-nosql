@@ -16,7 +16,6 @@ import java.util.List;
 @Tag(name = "Calendário", description = "Operações relacionadas ao calendário")
 @RequestMapping("/api/calendario")
 public interface CalendarioControllerDocs {
-
     @Operation(summary = "Lista todos os registros do calendário")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Lista de calendários retornada com sucesso"),
@@ -39,13 +38,6 @@ public interface CalendarioControllerDocs {
     })
     @GetMapping("/selecionar/usuario/{idUsuario}")
     ResponseEntity<List<Calendario>> buscarPorUsuario(@PathVariable Integer idUsuario);
-
-    @Operation(summary = "Busca calendário pelo ID do gestor")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Lista de calendários do gestor retornada com sucesso")
-    })
-    @GetMapping("/selecionar/gestor/{idGestor}")
-    ResponseEntity<List<Calendario>> buscarPorGestor(@PathVariable Integer idGestor);
 
     @Operation(summary = "Busca calendário por presença")
     @ApiResponses({

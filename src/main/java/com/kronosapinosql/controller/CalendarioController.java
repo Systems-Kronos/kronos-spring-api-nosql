@@ -43,12 +43,6 @@ public class CalendarioController implements CalendarioControllerDocs {
     }
 
     @Override
-    public ResponseEntity<List<Calendario>> buscarPorGestor(@PathVariable Integer idGestor) {
-        List<Calendario> calendarios = calendarioService.buscarPorGestor(idGestor);
-        return ResponseEntity.ok(calendarios);
-    }
-
-    @Override
     public ResponseEntity<List<Calendario>> buscarPorPresenca(@PathVariable Boolean presenca) {
         List<Calendario> calendarios = calendarioService.buscarPorPresenca(presenca);
         return ResponseEntity.ok(calendarios);
