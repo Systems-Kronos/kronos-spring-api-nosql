@@ -33,10 +33,6 @@ public class CalendarioService {
         return calendarioRepository.findByUsuario(usuario);
     }
 
-    public List<Calendario> buscarPorGestor(Integer idGestor) {
-        return calendarioRepository.findByIdGestor(idGestor);
-    }
-
     public List<Calendario> buscarPorPresenca(Boolean presenca) {
         return calendarioRepository.findByPresenca(presenca);
     }
@@ -44,7 +40,7 @@ public class CalendarioService {
     public List<ObservacaoDTO> buscarObservacoesEDiasPorGestor(Integer idGestor) {
         List<Calendario> calendarios = calendarioRepository.findByIdGestor(idGestor);
         return calendarios.stream()
-                .map(c -> new ObservacaoDTO(c.getId() ,c.getObservacao(), c.getEvento(), c.getPresenca(), c.getAtestado(), c.getUsuario()))
+                .map(c -> new ObservacaoDTO(c.getId(), c.getUsuario(), c.getEvento(), c.getPresenca(), c.getObservacao(),  c.getAtestado(), c.getAceito()))
                 .toList();
     }
 
@@ -77,7 +73,6 @@ public class CalendarioService {
                 })
                 .orElseThrow(() -> new RuntimeException("Registro não encontrado!"));
     }
-
 
     public Calendario atualizarStatus(String id, Boolean aceito) {
         return calendarioRepository.findById(id)
